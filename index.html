@@ -1,0 +1,749 @@
+আমি আপনার সমস্ত কোড এবং রিকোয়ারমেন্ট (Firebase Realtime Database, PWA/Web Application Installing System, Admin Panel, Delivery Boy System, Customer Panel, 5-click Admin Access with Password 7876482550000, Dynamic Logo, Products, Categories, Offers, GPS Location) সুন্দরভাবে গুছিয়ে সম্পূর্ণ একটি Single-File Full Stack E-commerce Web Application তৈরি করেছি।
+আপনার সুবিধার্থে নিচে সম্পূর্ণ index.html ফাইলটির কোড দেওয়া হলো। কোডটির উপরে এক-ক্লিকে কপি করার বোতাম পাবেন।
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sosta Bazar - Fashion & Apparel</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- PWA Manifest Integration -->
+  <link rel="manifest" id="manifest-placeholder">
+
+  <style>
+    :root {
+      --bg: #fdf6f3;
+      --surface: #ffffff;
+      --text: #3a2b2b;
+      --muted: #9a8480;
+      --primary: #c46b74;
+      --secondary: #e6a0a8;
+      --accent: #d98a94;
+      --border: #f3e3df;
+      --radius: 20px;
+      --shadow: 0 10px 30px rgba(196, 107, 116, 0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'Manrope', system-ui, sans-serif; padding-bottom: 70px; }
+    h1, h2, h3, .brand-font { font-family: 'Fraunces', serif; }
+    button { cursor: pointer; font-family: inherit; transition: all 0.2s ease; }
+
+    /* Header & Navigation */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 24px; background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px); border-bottom: 1px solid var(--border);
+    }
+    .logo-container { display: flex; align-items: center; gap: 10px; cursor: pointer; user-select: none; }
+    .logo-img { height: 38px; width: 38px; object-fit: cover; border-radius: 50%; }
+    .logo-text { font-size: 22px; font-weight: 700; color: var(--text); letter-spacing: 0.5px; }
+
+    .nav-actions { display: flex; align-items: center; gap: 16px; }
+    .icon-btn { background: none; border: none; font-size: 20px; color: var(--text); position: relative; padding: 6px; }
+    .badge { position: absolute; top: 0; right: 0; background: var(--primary); color: white; font-size: 10px; font-weight: 700; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+
+    /* PWA Install Banner */
+    #pwa-install-banner {
+      background: var(--text); color: white; padding: 12px 20px;
+      display: none; align-items: center; justify-content: space-between;
+      font-size: 14px;
+    }
+    #pwa-install-banner button { background: var(--primary); border: none; color: white; padding: 6px 16px; border-radius: 20px; font-weight: 600; }
+
+    /* Hero Section */
+    .hero {
+      padding: 60px 24px;
+      background: linear-gradient(120deg, color-mix(in srgb, var(--primary) 12%, var(--bg)), var(--bg));
+      border-bottom: 1px solid var(--border);
+    }
+    .hero h1 { font-size: 42px; line-height: 1.1; margin-bottom: 16px; color: var(--text); }
+    .hero p { color: var(--muted); font-size: 16px; max-width: 480px; margin-bottom: 24px; }
+    
+    .btn-primary {
+      background: var(--primary); color: #fff; border: none;
+      padding: 14px 28px; border-radius: 999px; font-weight: 700;
+      box-shadow: 0 4px 15px rgba(196, 107, 116, 0.3);
+    }
+    .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+
+    /* Layout Sections */
+    section { padding: 40px 24px; max-width: 1200px; margin: 0 auto; }
+    .section-title { font-size: 28px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+
+    /* Banner Grid */
+    .offer-banner {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: white; border-radius: var(--radius); padding: 30px; text-align: center; margin-bottom: 30px;
+    }
+
+    /* Product Grid */
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow);
+      display: flex; flex-direction: column; transition: transform 0.2s;
+    }
+    .card:hover { transform: translateY(-4px); }
+    .card-img { width: 100%; aspect-ratio: 1; object-fit: cover; background: var(--border); }
+    .card-body { padding: 16px; flex-grow: 1; display: flex; flex-direction: column; }
+    .card .cat { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); font-weight: 700; }
+    .card h3 { font-size: 16px; margin: 6px 0; font-family: 'Manrope', sans-serif; font-weight: 600; }
+    .card .price { font-size: 18px; font-weight: 700; color: var(--primary); margin: 8px 0; }
+    .card .price s { color: var(--muted); font-size: 14px; margin-left: 6px; font-weight: 400; }
+
+    /* Navigation Tabs / Views */
+    .view-panel { display: none; }
+    .view-panel.active { display: block; }
+
+    /* Bottom Navigation for Mobile */
+    .bottom-nav {
+      position: fixed; bottom: 0; left: 0; right: 0; background: var(--surface);
+      border-top: 1px solid var(--border); display: flex; justify-content: space-around;
+      padding: 10px 0; z-index: 1000;
+    }
+    .bottom-nav button { background: none; border: none; color: var(--muted); font-size: 12px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    .bottom-nav button.active { color: var(--primary); font-weight: 700; }
+    .bottom-nav i { font-size: 18px; }
+
+    /* Admin Panel Styling */
+    .admin-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 20px; }
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: 10px; font-family: inherit;
+    }
+    .badge-status { padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 700; }
+    .status-pending { background: #fff3cd; color: #856404; }
+    .status-verified { background: #d4edda; color: #155724; }
+    .status-delivered { background: #cce5ff; color: #004085; }
+
+    /* Modal / Overlay */
+    .modal {
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
+      display: none; align-items: center; justify-content: center; z-index: 2000; padding: 20px;
+    }
+    .modal.active { display: flex; }
+    .modal-content { background: var(--surface); border-radius: var(--radius); padding: 24px; width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto; }
+
+    /* Utility */
+    .text-center { text-align: center; }
+    .flex-between { display: flex; justify-content: space-between; align-items: center; }
+  </style>
+</head>
+<body>
+
+  <!-- PWA Install Prompt Banner -->
+  <div id="pwa-install-banner">
+    <span>ইনস্টল করুন "sosta bazar" অ্যাপের মতন ব্যবহার করতে!</span>
+    <button id="pwa-install-btn">ইনস্টল</button>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="logo-container" id="brand-logo-trigger">
+      <img id="app-logo-img" class="logo-img" src="https://via.placeholder.com/100/c46b74/ffffff?text=SB" alt="Logo">
+      <div class="logo-text" id="app-logo-text">sosta bazar</div>
+    </div>
+    <div class="nav-actions">
+      <button class="icon-btn" onclick="switchView('cart-view')">
+        <i class="fa-solid fa-bag-shopping"></i>
+        <span class="badge" id="cart-count">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- CUSTOMER VIEW: STOREFRONT -->
+  <div id="storefront-view" class="view-panel active">
+    <div class="hero">
+      <h1 id="hero-title">Wardrobe, elevated</h1>
+      <p id="hero-sub">Considered silhouettes in responsibly-sourced fabrics. Made to be worn on repeat.</p>
+      <button class="btn-primary" onclick="document.getElementById('shop-section').scrollIntoView({behavior: 'smooth'})">Shop new arrivals</button>
+    </div>
+
+    <section id="shop-section">
+      <!-- Offer Banner dynamically loaded -->
+      <div id="offer-banner-container"></div>
+
+      <div class="section-title">
+        <h2>Bestsellers</h2>
+        <select id="category-filter" onchange="filterProducts()" style="padding: 6px 12px; border-radius: 8px; border:1px solid var(--border)">
+          <option value="ALL">All Categories</option>
+        </select>
+      </div>
+
+      <div class="grid" id="product-grid">
+        <!-- Products render dynamically from Firebase -->
+      </div>
+    </section>
+  </div>
+
+  <!-- CUSTOMER VIEW: CART & CHECKOUT -->
+  <div id="cart-view" class="view-panel">
+    <section>
+      <h2 class="brand-font" style="margin-bottom: 20px;">Shopping Bag</h2>
+      <div id="cart-items-container"></div>
+      
+      <div id="checkout-section" style="margin-top: 30px; display: none;">
+        <div class="admin-card">
+          <h3>Checkout Details</h3>
+          <form id="checkout-form" onsubmit="handleCheckout(event)">
+            <div class="form-group">
+              <label>আপনার নাম</label>
+              <input type="text" id="cust-name" required placeholder="Name">
+            </div>
+            <div class="form-group">
+              <label>মোবাইল নম্বর</label>
+              <input type="tel" id="cust-phone" required placeholder="Phone Number">
+            </div>
+            <div class="form-group">
+              <label>সম্পূর্ণ ঠিকানা</label>
+              <textarea id="cust-address" required placeholder="Full Address"></textarea>
+            </div>
+            <div class="form-group">
+              <label>GPS Location (Mobile Live GPS)</label>
+              <button type="button" class="btn-primary" style="width: 100%; background: #6c757d;" onclick="getGPSLocation()">
+                <i class="fa-solid fa-location-crosshairs"></i> বর্তমান লোকেশন অ্যাড করুন
+              </button>
+              <input type="hidden" id="cust-gps">
+              <small id="gps-status" style="color: var(--muted); display: block; margin-top: 5px;"></small>
+            </div>
+            <div class="form-group">
+              <label>পেমেন্ট মেথড (Bkash / Nagad / Cash on Delivery)</label>
+              <select id="cust-payment-method">
+                <option value="COD">Cash on Delivery</option>
+                <option value="bKash">bKash Manual Verification</option>
+                <option value="Nagad">Nagad Manual Verification</option>
+              </select>
+            </div>
+            <div class="form-group" id="trx-group" style="display: none;">
+              <label>Transaction ID / Sender Number</label>
+              <input type="text" id="cust-trx" placeholder="e.g. TRX12345678">
+            </div>
+            <button type="submit" class="btn-primary" style="width: 100%;">অর্ডার নিশ্চিত করুন</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- CUSTOMER VIEW: ORDERS -->
+  <div id="orders-view" class="view-panel">
+    <section>
+      <h2 class="brand-font" style="margin-bottom: 20px;">My Orders</h2>
+      <div id="my-orders-list"></div>
+    </section>
+  </div>
+
+  <!-- DELIVERY BOY PANEL VIEW -->
+  <div id="delivery-view" class="view-panel">
+    <section>
+      <h2 class="brand-font" style="margin-bottom: 10px;">Delivery Boy Portal</h2>
+      <p style="color: var(--muted); margin-bottom: 20px;">আজকের সমস্ত ডেলিভারি অ্যাসাইনমেন্ট দেখুন এবং স্টেটাস আপডেট করুন</p>
+      <div id="delivery-orders-list"></div>
+    </section>
+  </div>
+
+  <!-- ADMIN PANEL VIEW -->
+  <div id="admin-view" class="view-panel">
+    <section>
+      <div class="flex-between" style="margin-bottom: 20px;">
+        <h2 class="brand-font">Admin Dashboard</h2>
+        <button class="btn-primary" style="background:#dc3545;" onclick="switchView('storefront-view')">Exit Admin</button>
+      </div>
+
+      <!-- Settings & Logo -->
+      <div class="admin-card">
+        <h3>1. Branding & Content Settings</h3>
+        <div class="form-group">
+          <label>কোম্পানির নাম (Logo Text)</label>
+          <input type="text" id="admin-logo-text-input">
+        </div>
+        <div class="form-group">
+          <label>কোম্পানির লোগো (Image URL)</label>
+          <input type="text" id="admin-logo-url-input" placeholder="https://...">
+        </div>
+        <div class="form-group">
+          <label>অফার ব্যানার টেক্সট (Offer Headline)</label>
+          <input type="text" id="admin-offer-input" placeholder="e.g. ৫০% ছাড় সব পোশাকে!">
+        </div>
+        <button class="btn-primary" onclick="saveBrandingSettings()">সেভ ব্র্যান্ডিং</button>
+      </div>
+
+      <!-- Category Management -->
+      <div class="admin-card">
+        <h3>2. Category Management</h3>
+        <div class="form-group">
+          <label>নতুন ক্যাটাগরি নাম</label>
+          <input type="text" id="new-cat-input">
+        </div>
+        <button class="btn-primary" onclick="addCategory()">ক্যাটাগরি যুক্ত করুন</button>
+      </div>
+
+      <!-- Add Product -->
+      <div class="admin-card">
+        <h3>3. Add / Manage Products (2-3 Images Support)</h3>
+        <form id="product-form" onsubmit="saveProduct(event)">
+          <div class="form-group">
+            <label>প্রোডাক্ট এর নাম</label>
+            <input type="text" id="prod-name" required>
+          </div>
+          <div class="form-group">
+            <label>ক্যাটাগরি</label>
+            <select id="prod-category" required></select>
+          </div>
+          <div class="form-group">
+            <label>মূল্য ($ / ৳)</label>
+            <input type="number" id="prod-price" required>
+          </div>
+          <div class="form-group">
+            <label>ছাড়ের আগের মূল্য (Discount Price)</label>
+            <input type="number" id="prod-old-price">
+          </div>
+          <div class="form-group">
+            <label>ছবি ১ (URL)</label>
+            <input type="text" id="prod-img1" required>
+          </div>
+          <div class="form-group">
+            <label>ছবি ২ (URL) (Optional)</label>
+            <input type="text" id="prod-img2">
+          </div>
+          <div class="form-group">
+            <label>ছবি ৩ (URL) (Optional)</label>
+            <input type="text" id="prod-img3">
+          </div>
+          <div class="form-group">
+            <label>বিবরণ (Description)</label>
+            <textarea id="prod-desc"></textarea>
+          </div>
+          <button type="submit" class="btn-primary">প্রোডাক্ট সেভ করুন</button>
+        </form>
+      </div>
+
+      <!-- Orders & Payment Verification -->
+      <div class="admin-card">
+        <h3>4. Order Management & Verification</h3>
+        <div id="admin-orders-list"></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Bottom Nav -->
+  <div class="bottom-nav">
+    <button class="active" onclick="switchView('storefront-view')" id="nav-home">
+      <i class="fa-solid fa-store"></i> Home
+    </button>
+    <button onclick="switchView('orders-view')" id="nav-orders">
+      <i class="fa-solid fa-box"></i> Orders
+    </button>
+    <button onclick="switchView('delivery-view')" id="nav-delivery">
+      <i class="fa-solid fa-truck-ramping"></i> Delivery
+    </button>
+  </div>
+
+  <!-- Admin Password Modal -->
+  <div class="modal" id="admin-modal">
+    <div class="modal-content">
+      <h3 class="brand-font" style="margin-bottom: 15px;">Admin Security Check</h3>
+      <p style="margin-bottom: 15px; font-size: 14px; color: var(--muted);">এডমিন প্যানেলে প্রবেশ করার জন্য পাসওয়ার্ড লিখুন:</p>
+      <input type="password" id="admin-pass-input" placeholder="Password" style="width: 100%; padding: 12px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 15px;">
+      <div style="display: flex; gap: 10px;">
+        <button class="btn-primary" style="flex: 1;" onclick="verifyAdminPassword()">Login</button>
+        <button class="btn-primary" style="flex: 1; background: #6c757d;" onclick="closeAdminModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase Scripts (v8 SDK) -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+  <script>
+    // 1. FIREBASE CONFIGURATION
+    const firebaseConfig = {
+      apiKey: "AIzaSyDJmu9uD5rT5ee1jNLpMQaTVIa_-yTrPzw",
+      authDomain: "public-service-11054.firebaseapp.com",
+      databaseURL: "https://public-service-11054-default-rtdb.firebaseio.com",
+      projectId: "public-service-11054",
+      storageBucket: "public-service-11054.firebasestorage.app",
+      messagingSenderId: "639313474404",
+      appId: "1:639313474404:web:9ac4645e521021c044c071",
+      measurementId: "G-ZMCRHQ4VC3"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    // 2. STATE & VARIABLES
+    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    let allProducts = {};
+    let logoClickCounter = 0;
+    const ADMIN_PASS = "7876482550000";
+
+    // Dynamic Manifest Generation for PWA
+    const manifest = {
+      name: "sosta bazar",
+      short_name: "SostaBazar",
+      start_url: ".",
+      display: "standalone",
+      background_color: "#fdf6f3",
+      theme_color: "#c46b74",
+      icons: [{ src: "https://via.placeholder.com/192/c46b74/ffffff?text=SB", sizes: "192x192", type: "image/png" }]
+    };
+    const stringManifest = JSON.stringify(manifest);
+    const blob = new Blob([stringManifest], {type: 'application/json'});
+    const manifestURL = URL.createObjectURL(blob);
+    document.getElementById('manifest-placeholder').setAttribute('href', manifestURL);
+
+    // 3. PWA INSTALLATION SYSTEM
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      document.getElementById('pwa-install-banner').style.display = 'flex';
+    });
+
+    document.getElementById('pwa-install-btn').addEventListener('click', () => {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            document.getElementById('pwa-install-banner').style.display = 'none';
+          }
+          deferredPrompt = null;
+        });
+      }
+    });
+
+    // 4. SECRET 5-CLICK ADMIN TRIGGER
+    document.getElementById('brand-logo-trigger').addEventListener('click', () => {
+      logoClickCounter++;
+      if (logoClickCounter >= 5) {
+        logoClickCounter = 0;
+        document.getElementById('admin-modal').classList.add('active');
+      }
+      setTimeout(() => { logoClickCounter = 0; }, 3000);
+    });
+
+    function closeAdminModal() {
+      document.getElementById('admin-modal').classList.remove('active');
+    }
+
+    function verifyAdminPassword() {
+      const pass = document.getElementById('admin-pass-input').value;
+      if (pass === ADMIN_PASS) {
+        closeAdminModal();
+        switchView('admin-view');
+      } else {
+        alert("ভুল পাসওয়ার্ড! আবার চেষ্টা করুন।");
+      }
+    }
+
+    // 5. VIEW SWITCHING SYSTEM
+    function switchView(viewId) {
+      document.querySelectorAll('.view-panel').forEach(el => el.classList.remove('active'));
+      document.getElementById(viewId).classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    // 6. REALTIME FIREBASE LISTENERS
+    // Branding & Site Settings
+    db.ref('settings').on('value', (snapshot) => {
+      const data = snapshot.val() || {};
+      if (data.logoText) {
+        document.getElementById('app-logo-text').innerText = data.logoText;
+        document.getElementById('admin-logo-text-input').value = data.logoText;
+      }
+      if (data.logoUrl) {
+        document.getElementById('app-logo-img').src = data.logoUrl;
+        document.getElementById('admin-logo-url-input').value = data.logoUrl;
+      }
+      if (data.offerText) {
+        document.getElementById('admin-offer-input').value = data.offerText;
+        document.getElementById('offer-banner-container').innerHTML = `
+          <div class="offer-banner">
+            <h2>${data.offerText}</h2>
+          </div>`;
+      }
+    });
+
+    // Categories
+    db.ref('categories').on('value', (snapshot) => {
+      const categories = snapshot.val() || {};
+      const filterSelect = document.getElementById('category-filter');
+      const prodCatSelect = document.getElementById('prod-category');
+      
+      filterSelect.innerHTML = '<option value="ALL">All Categories</option>';
+      prodCatSelect.innerHTML = '';
+
+      Object.values(categories).forEach(cat => {
+        filterSelect.innerHTML += `<option value="${cat}">${cat}</option>`;
+        prodCatSelect.innerHTML += `<option value="${cat}">${cat}</option>`;
+      });
+    });
+
+    // Products
+    db.ref('products').on('value', (snapshot) => {
+      allProducts = snapshot.val() || {};
+      renderProducts(allProducts);
+    });
+
+    // Orders
+    db.ref('orders').on('value', (snapshot) => {
+      const orders = snapshot.val() || {};
+      renderAdminOrders(orders);
+      renderCustomerOrders(orders);
+      renderDeliveryOrders(orders);
+    });
+
+    // 7. PRODUCT DISPLAY & CART
+    function renderProducts(products) {
+      const grid = document.getElementById('product-grid');
+      grid.innerHTML = '';
+      Object.keys(products).forEach(key => {
+        const p = products[key];
+        grid.innerHTML += `
+          <article class="card">
+            <img class="card-img" src="${p.img1}" alt="${p.name}">
+            <div class="card-body">
+              <span class="cat">${p.category}</span>
+              <h3>${p.name}</h3>
+              <div class="price">$${p.price} ${p.oldPrice ? `<s>$${p.oldPrice}</s>` : ''}</div>
+              <button class="btn-primary" onclick="addToCart('${key}')">Add to bag</button>
+            </div>
+          </article>
+        `;
+      });
+    }
+
+    function filterProducts() {
+      const val = document.getElementById('category-filter').value;
+      if (val === 'ALL') {
+        renderProducts(allProducts);
+      } else {
+        const filtered = {};
+        Object.keys(allProducts).forEach(k => {
+          if (allProducts[k].category === val) filtered[k] = allProducts[k];
+        });
+        renderProducts(filtered);
+      }
+    }
+
+    function addToCart(prodId) {
+      const prod = allProducts[prodId];
+      cart.push(prod);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      updateCartUI();
+      alert('প্রোডাক্ট ব্যাগে যোগ করা হয়েছে!');
+    }
+
+    function updateCartUI() {
+      document.getElementById('cart-count').innerText = cart.length;
+      const container = document.getElementById('cart-items-container');
+      const checkoutSec = document.getElementById('checkout-section');
+
+      if (cart.length === 0) {
+        container.innerHTML = '<p style="color:var(--muted)">আপনার ব্যাগ খালি।</p>';
+        checkoutSec.style.display = 'none';
+        return;
+      }
+
+      checkoutSec.style.display = 'block';
+      let total = 0;
+      let html = '';
+      cart.forEach((item, idx) => {
+        total += Number(item.price);
+        html += `
+          <div class="admin-card flex-between">
+            <div>
+              <h4>${item.name}</h4>
+              <p style="color:var(--primary); font-weight:700">$${item.price}</p>
+            </div>
+            <button class="btn-primary" style="background:#dc3545;" onclick="removeFromCart(${idx})">রিমুভ</button>
+          </div>
+        `;
+      });
+      html += `<h3 style="margin-top:15px">মোট মূল্য: $${total}</h3>`;
+      container.innerHTML = html;
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      localStorage.setItem('cart', JSON.stringify(cart));
+      updateCartUI();
+    }
+
+    // 8. GPS & CHECKOUT
+    document.getElementById('cust-payment-method').addEventListener('change', (e) => {
+      const trxGroup = document.getElementById('trx-group');
+      if (e.target.value !== 'COD') {
+        trxGroup.style.display = 'block';
+      } else {
+        trxGroup.style.display = 'none';
+      }
+    });
+
+    function getGPSLocation() {
+      const status = document.getElementById('gps-status');
+      if (navigator.geolocation) {
+        status.innerText = 'লোকেশন লোড হচ্ছে...';
+        navigator.geolocation.getCurrentPosition((pos) => {
+          const coords = `${pos.coords.latitude},${pos.coords.longitude}`;
+          document.getElementById('cust-gps').value = coords;
+          status.innerText = `GPS সফলভাবে যুক্ত হয়েছে: (${coords})`;
+        }, () => {
+          status.innerText = 'GPS অনুমতি দেওয়া হয়নি বা পাওয়া যায়নি।';
+        });
+      } else {
+        status.innerText = 'ব্রাউজার GPS সাপোর্ট করে না।';
+      }
+    }
+
+    function handleCheckout(e) {
+      e.preventDefault();
+      const orderData = {
+        customerName: document.getElementById('cust-name').value,
+        phone: document.getElementById('cust-phone').value,
+        address: document.getElementById('cust-address').value,
+        gps: document.getElementById('cust-gps').value || 'Not provided',
+        paymentMethod: document.getElementById('cust-payment-method').value,
+        trxId: document.getElementById('cust-trx').value || 'N/A',
+        items: cart,
+        status: 'PENDING',
+        timestamp: Date.now()
+      };
+
+      db.ref('orders').push(orderData).then(() => {
+        alert('আপনার অর্ডারটি সফলভাবে প্লেস করা হয়েছে!');
+        cart = [];
+        localStorage.removeItem('cart');
+        updateCartUI();
+        switchView('orders-view');
+      });
+    }
+
+    // 9. RENDER ORDERS (ADMIN / CUSTOMER / DELIVERY)
+    function renderAdminOrders(orders) {
+      const container = document.getElementById('admin-orders-list');
+      container.innerHTML = '';
+      Object.keys(orders).forEach(id => {
+        const o = orders[id];
+        container.innerHTML += `
+          <div class="admin-card">
+            <div class="flex-between">
+              <strong>Order ID: ${id.slice(-6)}</strong>
+              <span class="badge-status status-${o.status.toLowerCase()}">${o.status}</span>
+            </div>
+            <p><strong>Customer:</strong> ${o.customerName} (${o.phone})</p>
+            <p><strong>Address:</strong> ${o.address}</p>
+            <p><strong>GPS:</strong> ${o.gps !== 'Not provided' ? `<a href="https://maps.google.com/?q=${o.gps}" target="_blank">View Map</a>` : 'N/A'}</p>
+            <p><strong>Payment:</strong> ${o.paymentMethod} (Trx: ${o.trxId})</p>
+            <div style="margin: 10px 0;">
+              <button class="btn-primary" style="background:#28a745; font-size:12px;" onclick="updateOrderStatus('${id}', 'VERIFIED')">Verify Order</button>
+              <button class="btn-primary" style="background:#007bff; font-size:12px;" onclick="updateOrderStatus('${id}', 'DELIVERED')">Mark Delivered</button>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    function renderCustomerOrders(orders) {
+      const container = document.getElementById('my-orders-list');
+      container.innerHTML = '';
+      Object.keys(orders).forEach(id => {
+        const o = orders[id];
+        container.innerHTML += `
+          <div class="admin-card">
+            <div class="flex-between">
+              <strong>Order #${id.slice(-6)}</strong>
+              <span class="badge-status status-${o.status.toLowerCase()}">${o.status}</span>
+            </div>
+            <p style="margin-top:8px;">পেমেন্ট মেথড: ${o.paymentMethod}</p>
+          </div>
+        `;
+      });
+    }
+
+    function renderDeliveryOrders(orders) {
+      const container = document.getElementById('delivery-orders-list');
+      container.innerHTML = '';
+      Object.keys(orders).forEach(id => {
+        const o = orders[id];
+        container.innerHTML += `
+          <div class="admin-card">
+            <div class="flex-between">
+              <h4>${o.customerName} - ${o.phone}</h4>
+              <span class="badge-status status-${o.status.toLowerCase()}">${o.status}</span>
+            </div>
+            <p><strong>ঠিকানা:</strong> ${o.address}</p>
+            ${o.gps !== 'Not provided' ? `<a href="https://maps.google.com/?q=${o.gps}" target="_blank" class="btn-primary" style="display:inline-block; margin: 8px 0; background:#17a2b8;">গুগল ম্যাপ চালু করুন</a>` : ''}
+            <div>
+              <button class="btn-primary" style="width:100%; margin-top:8px;" onclick="updateOrderStatus('${id}', 'DELIVERED')">ডেলিভারি সফল চিহ্নিত করুন</button>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    function updateOrderStatus(orderId, status) {
+      db.ref(`orders/${orderId}`).update({ status: status });
+    }
+
+    // 10. ADMIN ACTIONS
+    function saveBrandingSettings() {
+      const logoText = document.getElementById('admin-logo-text-input').value;
+      const logoUrl = document.getElementById('admin-logo-url-input').value;
+      const offerText = document.getElementById('admin-offer-input').value;
+
+      db.ref('settings').set({
+        logoText: logoText,
+        logoUrl: logoUrl,
+        offerText: offerText
+      }).then(() => alert('ব্র্যান্ডিং সফলভাবে আপডেট করা হয়েছে!'));
+    }
+
+    function addCategory() {
+      const cat = document.getElementById('new-cat-input').value;
+      if (cat) {
+        db.ref('categories').push(cat).then(() => {
+          document.getElementById('new-cat-input').value = '';
+          alert('ক্যাটাগরি যুক্ত করা হয়েছে!');
+        });
+      }
+    }
+
+    function saveProduct(e) {
+      e.preventDefault();
+      const productData = {
+        name: document.getElementById('prod-name').value,
+        category: document.getElementById('prod-category').value,
+        price: document.getElementById('prod-price').value,
+        oldPrice: document.getElementById('prod-old-price').value || null,
+        img1: document.getElementById('prod-img1').value,
+        img2: document.getElementById('prod-img2').value || null,
+        img3: document.getElementById('prod-img3').value || null,
+        desc: document.getElementById('prod-desc').value || ''
+      };
+
+      db.ref('products').push(productData).then(() => {
+        alert('প্রোডাক্ট যুক্ত হয়েছে!');
+        document.getElementById('product-form').reset();
+      });
+    }
+
+    // Initialize UI
+    updateCartUI();
+  </script>
+</body>
+</html>
+
